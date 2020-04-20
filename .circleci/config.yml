@@ -1,0 +1,19 @@
+version: 2.1
+orbs:
+  azure-acr: circleci/azure-acr@0.2.0
+  azure-cli: circci/azure-cli@1.0.0
+jobs:
+  install_azure_cli:
+    executor: azure-cli/default
+    steps:
+      - azure-cli/install
+      - run: 
+          command: az -v
+          name: verify az cli has been installed
+      - azure-acr/build-and-push-image:
+          login-server-name: ecuTestACR.azurecr.io
+          registry-name: ecuTestACR
+          repo: helloworld
+      # - run:
+      #     name: "deploy new image"
+      #     command: 
